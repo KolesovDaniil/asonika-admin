@@ -6,3 +6,14 @@ upgrade_requirements:
 
 install_requirements:
 	pip install -r requirements.dev.txt --upgrade --use-deprecated=legacy-resolver
+
+format:
+	isort .
+	black .
+
+check:
+	isort --check-only --diff .
+	black --check .
+	flake8 --config=flake8.ini
+	bandit . --recursive --quiet --exclude **/tests*,./.venv,./venv
+	mypy .

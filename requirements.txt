@@ -2,6 +2,8 @@ asgiref==3.3.4
     # via django
 click==8.0.1
     # via pip-tools
+django-environ==0.4.5
+    # via -r requirements.in
 django==3.2.4
     # via -r requirements.in
 funcy==1.16

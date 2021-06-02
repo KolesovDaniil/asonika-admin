@@ -1,3 +1,4 @@
 django
 funcy
 pip-tools
+django-environ
