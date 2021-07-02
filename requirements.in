@@ -2,3 +2,4 @@ django
 funcy
 pip-tools
 django-environ
+psycopg2-binary
