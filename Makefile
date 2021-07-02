@@ -5,7 +5,7 @@ upgrade_requirements:
 	pip-compile requirements.in -o requirements.txt --upgrade --quiet --no-header --no-emit-index-url
 
 install_requirements:
-	pip install -r requirements.dev.txt --upgrade --use-deprecated=legacy-resolver
+	pip install -r requirements.dev.txt --upgrade
 
 format:
 	isort .
