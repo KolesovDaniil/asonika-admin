@@ -1,0 +1,2 @@
+class InvalidJSONSchema(Exception):
+    pass
