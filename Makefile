@@ -7,6 +7,15 @@ upgrade_requirements:
 install_requirements:
 	pip install -r requirements.dev.txt --upgrade
 
+run:
+	docker-compose up asonika
+
+shell:
+	docker-compose run asonika python manage.py shell
+
+docker_migrate:
+	docker-compose run asonika python manage.py migrate
+
 format:
 	isort .
 	black .

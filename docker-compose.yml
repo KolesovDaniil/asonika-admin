@@ -1,0 +1,31 @@
+version: "3.4"
+services:
+  asonika:
+    build: .
+    tty: true
+    env_file:
+      - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: asonika_ecb.settings
+      IPYTHONDIR: /opt/.ipython
+      POSTGRES_HOST: social_db
+    links:
+      - asonika_db
+    ports:
+      -  "${APP_PORT:-8000}:8000"
+    depends_on:
+      - asonika_db
+    volumes:
+      - .:/opt:cached
+
+  asonika_db:
+    image: postgres:12.5
+    env_file:
+      - .env
+    volumes:
+      - social_data:/var/lib/postgresql/data:cached
+      - .:/opt:cached
+
+volumes:
+  social_data:
+    external: false
