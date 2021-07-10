@@ -1,7 +1,9 @@
 version: "3.4"
 services:
   asonika:
-    build: .
+    build:
+      context: .
+      target: dev_image
     tty: true
     env_file:
       - .env
