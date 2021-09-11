@@ -18,3 +18,7 @@ flake8-simplify
 flake8-quotes
 bandit
 mypy
+pytest
+pytest-django
+pytest-random-order
+pytest-mock

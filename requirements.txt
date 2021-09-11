@@ -2,6 +2,8 @@ appnope==0.1.2
     # via ipython
 asgiref==3.3.4
     # via django
+attrs==21.2.0
+    # via jsonschema
 backcall==0.2.0
     # via ipython
 click==8.0.1
@@ -20,6 +22,8 @@ ipython==7.25.0
     # via -r requirements.in
 jedi==0.18.0
     # via ipython
+jsonschema==3.2.0
+    # via -r requirements.in
 matplotlib-inline==0.1.2
     # via ipython
 parso==0.8.2
@@ -40,8 +44,12 @@ ptyprocess==0.7.0
     # via pexpect
 pygments==2.9.0
     # via ipython
+pyrsistent==0.18.0
+    # via jsonschema
 pytz==2021.1
     # via django
+six==1.16.0
+    # via jsonschema
 sqlparse==0.4.1
     # via django
 toml==0.10.2
