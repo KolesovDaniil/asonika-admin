@@ -4,3 +4,6 @@ pip-tools
 django-environ
 psycopg2-binary
 ipython
+djangorestframework
+django-filter
+drf-spectacular

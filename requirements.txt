@@ -2,6 +2,8 @@ appnope==0.1.2
     # via ipython
 asgiref==3.3.4
     # via django
+attrs==21.2.0
+    # via jsonschema
 backcall==0.2.0
     # via ipython
 click==8.0.1
@@ -10,16 +12,32 @@ decorator==5.0.9
     # via ipython
 django-environ==0.4.5
     # via -r requirements.in
+django-filter==2.4.0
+    # via -r requirements.in
 django==3.2.4
+    # via
+    #   -r requirements.in
+    #   django-filter
+    #   djangorestframework
+    #   drf-spectacular
+djangorestframework==3.12.4
+    # via
+    #   -r requirements.in
+    #   drf-spectacular
+drf-spectacular==0.18.2
     # via -r requirements.in
 funcy==1.16
     # via -r requirements.in
+inflection==0.5.1
+    # via drf-spectacular
 ipython-genutils==0.2.0
     # via traitlets
 ipython==7.25.0
     # via -r requirements.in
 jedi==0.18.0
     # via ipython
+jsonschema==3.2.0
+    # via drf-spectacular
 matplotlib-inline==0.1.2
     # via ipython
 parso==0.8.2
@@ -40,8 +58,14 @@ ptyprocess==0.7.0
     # via pexpect
 pygments==2.9.0
     # via ipython
+pyrsistent==0.18.0
+    # via jsonschema
 pytz==2021.1
     # via django
+pyyaml==5.4.1
+    # via drf-spectacular
+six==1.16.0
+    # via jsonschema
 sqlparse==0.4.1
     # via django
 toml==0.10.2
@@ -50,6 +74,8 @@ traitlets==5.0.5
     # via
     #   ipython
     #   matplotlib-inline
+uritemplate==3.0.1
+    # via drf-spectacular
 wcwidth==0.2.5
     # via prompt-toolkit
 
