@@ -1,19 +1,21 @@
-"""asonika_admin URL Configuration
+from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework.routers import SimpleRouter
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path
+from measurements.views import MeasurementGroupViewSet, MeasurementUnitViewSet
 
-urlpatterns = [path('admin/', admin.site.urls)]
+measurements_router = SimpleRouter()
+measurements_router.register(
+    'unit', MeasurementUnitViewSet, basename='measurement_unit'
+)
+measurements_router.register(
+    'group', MeasurementGroupViewSet, basename='measurement_group'
+)
+
+api_urls = [path('measurement/', include(measurements_router.urls))]
+
+urlpatterns = [
+    path('api/', include((api_urls, 'measurements'), 'api')),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('schema-ui/', SpectacularSwaggerView.as_view(url_name='schema')),
+]

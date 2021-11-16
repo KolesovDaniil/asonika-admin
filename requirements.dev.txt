@@ -2,6 +2,7 @@
 typing_extensions
 black>21.4*
 isort>5
+factory-boy
 flake8
 flake8-print
 flake8-comprehensions
@@ -18,3 +19,7 @@ flake8-simplify
 flake8-quotes
 bandit
 mypy
+pytest
+pytest-django
+pytest-mock
+ipdb
