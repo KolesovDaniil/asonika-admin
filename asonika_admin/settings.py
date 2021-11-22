@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'measurements.apps.MeasurementsConfig',
     'users.apps.UsersConfig',
+    'rest_framework',
     'drf_spectacular',
 ]
 
