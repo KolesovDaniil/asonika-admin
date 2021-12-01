@@ -27,3 +27,16 @@ class MeasurementUnit(models.Model):
 
     class Meta:
         db_table = 'measurement_unit'
+
+
+class MeasurementGroupForParameter(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid4)
+    parameter_name = models.CharField(max_length=50)
+    model_name = models.CharField(max_length=50)
+    measurement_group = models.ForeignKey(
+        MeasurementGroup, on_delete=models.CASCADE, related_name='parameters', null=True
+    )
+
+    class Meta:
+        db_table = 'measurement_group_x_parameter'
+        unique_together = ('parameter_name', 'model_name')
