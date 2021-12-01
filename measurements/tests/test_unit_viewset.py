@@ -4,7 +4,7 @@ from django.urls import reverse
 from funcy import lmap
 from pytest import fixture
 
-from asonika_admin.tests.utils import error_response
+from asonika_admin.tests.utils import api_response, error_response
 from measurements.models import MeasurementUnit
 from users.tests.factories import UserFactory
 
@@ -36,7 +36,9 @@ class MeasurementUnitViewsetTestCase:
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.json() == lmap(_serialize_measurement_unit, [self.unit])
+        assert response.json() == api_response(
+            lmap(_serialize_measurement_unit, [self.unit])
+        )
 
     def test_get_unit_by_uuid(self, client):
         url = reverse('api:measurement_unit-detail', args=[str(self.unit.uuid)])
@@ -44,7 +46,7 @@ class MeasurementUnitViewsetTestCase:
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.json() == _serialize_measurement_unit(self.unit)
+        assert response.json() == api_response(_serialize_measurement_unit(self.unit))
 
     def test_create_unit(self, client):
         url = reverse('api:measurement_unit-list')
@@ -61,9 +63,11 @@ class MeasurementUnitViewsetTestCase:
 
         response = client.post(url, data=unit_data)
 
+        created_unit = MeasurementUnit.objects.get(uuid=response.json()['data']['uuid'])
         assert response.status_code == HTTPStatus.CREATED
-        created_unit = MeasurementUnit.objects.get(uuid=response.json()['uuid'])
-        assert response.json() == _serialize_measurement_unit(created_unit)
+        assert response.json() == api_response(
+            _serialize_measurement_unit(created_unit)
+        )
 
     def test_update_unit(self, client):
         url = reverse('api:measurement_unit-detail', args=[str(self.unit.uuid)])
@@ -73,8 +77,10 @@ class MeasurementUnitViewsetTestCase:
 
         self.unit.refresh_from_db()
         assert response.status_code == HTTPStatus.OK
-        assert response.json() == _serialize_measurement_unit(
-            self.unit, name='another_unit_name', multiplier=10
+        assert response.json() == api_response(
+            _serialize_measurement_unit(
+                self.unit, name='another_unit_name', multiplier=10
+            )
         )
 
     def test_delete_unit(self, client):

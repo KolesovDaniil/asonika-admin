@@ -105,6 +105,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAdminUser'],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'EXCEPTION_HANDLER': 'asonika_admin.exception_handlers.handle_bad_request',
+    'DEFAULT_RENDERER_CLASSES': ('asonika_admin.renderer.EnvelopedJSONRenderer',),
 }
 
 SPECTACULAR_SETTINGS = {

@@ -4,7 +4,7 @@ from django.urls import reverse
 from funcy import lmap
 from pytest import fixture
 
-from asonika_admin.tests.utils import error_response
+from asonika_admin.tests.utils import api_response, error_response
 from measurements.models import MeasurementGroup
 from users.tests.factories import UserFactory
 
@@ -36,7 +36,9 @@ class MeasurementGroupViewTestCase:
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.json() == lmap(_serialize_measurement_group, [self.group])
+        assert response.json() == api_response(
+            lmap(_serialize_measurement_group, [self.group])
+        )
 
     def test_get_group_by_uuid(self, client):
         url = reverse('api:measurement_group-detail', args=[str(self.group.uuid)])
@@ -44,7 +46,7 @@ class MeasurementGroupViewTestCase:
         response = client.get(url)
 
         assert response.status_code == HTTPStatus.OK
-        assert response.json() == _serialize_measurement_group(self.group)
+        assert response.json() == api_response(_serialize_measurement_group(self.group))
 
     def test_create_group(self, client):
         url = reverse('api:measurement_group-list')
@@ -53,8 +55,12 @@ class MeasurementGroupViewTestCase:
         response = client.post(url, data=group_data)
 
         assert response.status_code == HTTPStatus.CREATED
-        created_group = MeasurementGroup.objects.get(uuid=response.json()['uuid'])
-        assert response.json() == _serialize_measurement_group(created_group)
+        created_group = MeasurementGroup.objects.get(
+            uuid=response.json()['data']['uuid']
+        )
+        assert response.json() == api_response(
+            _serialize_measurement_group(created_group)
+        )
 
     def test_update_group(self, client):
         url = reverse('api:measurement_group-detail', args=[str(self.group.uuid)])
@@ -64,8 +70,10 @@ class MeasurementGroupViewTestCase:
 
         self.group.refresh_from_db()
         assert response.status_code == HTTPStatus.OK
-        assert response.json() == _serialize_measurement_group(
-            self.group, name='another_name', description='some_description'
+        assert response.json() == api_response(
+            _serialize_measurement_group(
+                self.group, name='another_name', description='some_description'
+            )
         )
 
     def test_delete_group(self, client):
