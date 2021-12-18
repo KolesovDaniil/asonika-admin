@@ -4,6 +4,7 @@ from rest_framework.routers import SimpleRouter
 
 from manufacturers.views import ManufacturerViewSet
 from measurements.views import MeasurementGroupViewSet, MeasurementUnitViewSet
+from users.views import UserLoginView
 
 measurements_router = SimpleRouter()
 measurements_router.register(
@@ -20,11 +21,12 @@ manufacturers_router.register(
 
 api_urls = [
     path('measurement/', include(measurements_router.urls)),
-    path('manufacturer/', include(manufacturers_router.urls)),
+    path('', include(manufacturers_router.urls)),
+    path('login/', UserLoginView.as_view(), name='user_login'),
 ]
 
 urlpatterns = [
-    path('api/', include((api_urls, 'measurements'), 'api')),
+    path('api/', include((api_urls, 'api'))),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('schema-ui/', SpectacularSwaggerView.as_view(url_name='schema')),
 ]
