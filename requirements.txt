@@ -28,6 +28,8 @@ drf-spectacular==0.18.2
     # via -r requirements.in
 funcy==1.16
     # via -r requirements.in
+humanize==3.13.1
+    # via -r requirements.in
 inflection==0.5.1
     # via drf-spectacular
 ipython-genutils==0.2.0

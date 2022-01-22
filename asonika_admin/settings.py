@@ -16,7 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', bool, default=False)
+CSRF_COOKIE_SECURE = not DEBUG
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=[])
 
@@ -34,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'manufacturers.apps.ManufacturersConfig',
     'measurements.apps.MeasurementsConfig',
+    'specifications.apps.SpecificationsConfig',
     'users.apps.UsersConfig',
     'rest_framework',
     'drf_spectacular',
@@ -114,6 +116,7 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Your project description',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
 }
 
 LATEST_API_VERSION = 1
@@ -146,3 +149,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Lengths
 DEFAULT_CHAR_FIELD_LENGTH = 255
+
+APP_PORT = env('APP_PORT', int)
+APP_DOMAIN = env('APP_DOMAIN', str)
+BASE_URL = f'{APP_DOMAIN}:{APP_PORT}'
+SPECIFICATIONS_FOLDER = env('SPECIFICATIONS_FOLDER', str, default='specifications_docs')
+SPECIFICATIONS_PATH = BASE_DIR / Path(SPECIFICATIONS_FOLDER)
+
+SECONDS = 1
+MINUTES = 60 * SECONDS
+HOURS = 60 * MINUTES
+DAYS = 24 * HOURS
+ABOUT_MONTH = 30 * DAYS
+ABOUT_YEAR = 365 * DAYS
+BYTES = 1
+KiB = 1024 * BYTES
+MiB = 1024 * KiB
+
+MAX_FILE_SIZE_IN_BYTES = 20 * MiB
