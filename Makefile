@@ -7,6 +7,12 @@ upgrade_requirements:
 install_requirements:
 	pip install -r requirements.dev.txt --upgrade --use-deprecated=legacy-resolver
 
+refresh:
+	git checkout master && \
+	git fetch && git pull && \
+	cp .env.template .env  && \
+	make docker_migrate
+
 run:
 	docker-compose up asonika
 
