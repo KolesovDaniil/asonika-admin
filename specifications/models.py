@@ -8,10 +8,8 @@ from .utils import get_specification_url
 
 class Specification(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid4)
-    name = models.CharField(max_length=settings.DEFAULT_CHAR_FIELD_LENGTH)
-    specification_file = models.CharField(
-        unique=True, max_length=settings.DEFAULT_CHAR_FIELD_LENGTH
-    )
+    name = models.CharField(max_length=settings.DEFAULT_CHAR_FIELD_LENGTH, unique=True)
+    specification_file = models.CharField(max_length=settings.DEFAULT_CHAR_FIELD_LENGTH)
     description = models.CharField(max_length=256, null=True)
 
     class Meta:
