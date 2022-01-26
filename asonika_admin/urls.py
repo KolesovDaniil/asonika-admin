@@ -28,8 +28,8 @@ specifications_router.register(
 api_urls = [
     path('measurement/', include(measurements_router.urls)),
     path('login/', UserLoginView.as_view(), name='user_login'),
-    path('manufacturer/', include(manufacturers_router.urls)),
-    path('specification/', include(specifications_router.urls)),
+    path('', include(manufacturers_router.urls)),
+    path('', include(specifications_router.urls)),
 ]
 
 urlpatterns = [
