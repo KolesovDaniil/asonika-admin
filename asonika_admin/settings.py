@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'measurements.apps.MeasurementsConfig',
     'specifications.apps.SpecificationsConfig',
     'users.apps.UsersConfig',
+    'categories.apps.CategoriesConfig',
+    'parameters.apps.ParametersConfig',
     'rest_framework',
     'drf_spectacular',
 ]
