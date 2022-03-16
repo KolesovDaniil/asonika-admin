@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.db import models
 
+from measurements.models import MeasurementGroup
 from asonika_admin.utils import ChoicesEnum
 
 
@@ -15,6 +16,9 @@ class Parameter(models.Model):
     type = models.PositiveIntegerField(choices=ParameterTypes.choices())
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True)
+    measurement_group = models.ForeignKey(
+        MeasurementGroup, on_delete=models.CASCADE, related_name='parameters'
+    )
 
     def __str__(self) -> str:
         return f'{self.name}'
