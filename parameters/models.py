@@ -2,8 +2,8 @@ from uuid import uuid4
 
 from django.db import models
 
-from measurements.models import MeasurementGroup
 from asonika_admin.utils import ChoicesEnum
+from measurements.models import MeasurementGroup
 
 
 class ParameterTypes(int, ChoicesEnum):
