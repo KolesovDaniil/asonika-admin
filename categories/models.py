@@ -10,3 +10,13 @@ class Category(models.Model):
 
     def __str__(self) -> str:
         return f'{self.name}'
+
+
+class ParamToCategorySettings(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid4)
+    param_uuid = models.UUIDField()
+    category_uuid = models.UUIDField()
+    required = models.BooleanField()
+
+    class Meta:
+        unique_together = [('param_uuid', 'category_uuid')]
