@@ -1,6 +1,6 @@
 import factory
 
-from ..models import MeasurementGroup, MeasurementGroupForParameter, MeasurementUnit
+from ..models import MeasurementGroup, MeasurementUnit
 
 
 class MeasurementGroupFactory(factory.django.DjangoModelFactory):
@@ -22,13 +22,3 @@ class MeasurementUnitFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = MeasurementUnit
-
-
-class MeasurementGroupForParameterFactory(factory.django.DjangoModelFactory):
-    uuid = factory.Faker('uuid4')
-    parameter_name = factory.Faker('slug')
-    model_name = factory.Faker('slug')
-    measurement_group = factory.SubFactory(MeasurementGroupFactory)
-
-    class Meta:
-        model = MeasurementGroupForParameter
