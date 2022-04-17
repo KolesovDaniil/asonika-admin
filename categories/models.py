@@ -5,7 +5,7 @@ from django.db import models
 from parameters.models import Parameter
 
 
-class ParamToCategorySettings(models.Model):
+class CategoryParametersSettings(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid4)
     parameter = models.ForeignKey(Parameter, on_delete=models.CASCADE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
@@ -20,7 +20,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True)
     parameters = models.ManyToManyField(
-        Parameter, related_name='categories', through=ParamToCategorySettings
+        Parameter, related_name='categories', through=CategoryParametersSettings
     )
     parent = models.ForeignKey(
         'self',

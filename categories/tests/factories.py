@@ -4,7 +4,7 @@ import factory
 
 from parameters.tests.factories import ParameterFactory
 
-from ..models import Category, ParamToCategorySettings
+from ..models import Category, CategoryParametersSettings
 
 
 class CategoryFactory(factory.django.DjangoModelFactory):
@@ -33,4 +33,4 @@ class ParamToCategorySettingsFactory(factory.django.DjangoModelFactory):
     category = factory.SubFactory(CategoryFactory)
 
     class Meta:
-        model = ParamToCategorySettings
+        model = CategoryParametersSettings
