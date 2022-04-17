@@ -2,6 +2,7 @@ from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import SimpleRouter
 
+from categories.views import CategoryViewSet
 from manufacturers.views import ManufacturerViewSet
 from measurements.views import MeasurementGroupViewSet, MeasurementUnitViewSet
 from parameters.views import ParameterViewSet
@@ -28,12 +29,16 @@ specifications_router.register(
 parameters_router = SimpleRouter()
 parameters_router.register('parameter', ParameterViewSet, basename='parameter')
 
+categories_router = SimpleRouter()
+categories_router.register('category', CategoryViewSet, basename='category')
+
 api_urls = [
     path('measurement/', include(measurements_router.urls)),
     path('login/', UserLoginView.as_view(), name='user_login'),
     path('', include(manufacturers_router.urls)),
     path('', include(specifications_router.urls)),
     path('', include(parameters_router.urls)),
+    path('', include(categories_router.urls)),
 ]
 
 urlpatterns = [

@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from django.db import models
+
 from parameters.models import Parameter
 
 
@@ -19,9 +20,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True)
     parameters = models.ManyToManyField(
-        Parameter,
-        related_name='categories',
-        through=ParamToCategorySettings,
+        Parameter, related_name='categories', through=ParamToCategorySettings
     )
     parent = models.ForeignKey(
         'self',
