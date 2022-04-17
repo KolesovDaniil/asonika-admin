@@ -1,25 +1,27 @@
 from typing import Any
 
 from drf_spectacular.utils import extend_schema
-from rest_framework import status
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
-from rest_framework.viewsets import ModelViewSet
 
 from asonika_admin.utils import EmptyResponse, ResponseWithStatusAndError
 
 from .models import Category
 from .serializers import (
+    CategoryParameterSettingsSerializer,
     CategorySerializer,
     CreateCategorySerializer,
+    UpdateCategoryParameterSettingsSerializer,
     UpdateCategorySerializer,
 )
 from .utils import inherit_parameters_from_parent, update_parameters
 
 
 @extend_schema(tags=['Category'])
-class CategoryViewSet(ModelViewSet):
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
 
@@ -71,3 +73,59 @@ class CategoryViewSet(ModelViewSet):
         )
 
         return Response(response_serializer.data)
+
+    @extend_schema(
+        responses={
+            '200': CategoryParameterSettingsSerializer(many=True),
+            '4XX': ResponseWithStatusAndError,
+        }
+    )
+    @action(
+        methods=['GET'],
+        url_path='parameters-settings',
+        url_name='parameters-settings',
+        detail=True,
+    )
+    def parameters_settings(
+        self, request: Request, *args: Any, **kwargs: Any
+    ) -> Response:
+        category = self.get_object()
+        parameters_settings = category.categoryparameterssettings_set.all()
+        response_serializer = CategoryParameterSettingsSerializer(
+            parameters_settings, many=True, context=self.get_serializer_context()
+        )
+
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
+
+    @extend_schema(
+        request=UpdateCategoryParameterSettingsSerializer(many=True),
+        responses={
+            '200': CategoryParameterSettingsSerializer(many=True),
+            '4XX': ResponseWithStatusAndError,
+        },
+    )
+    @parameters_settings.mapping.put
+    def update_parameters_settings(
+        self, request: Request, *args: Any, **kwargs: Any
+    ) -> Response:
+        category = self.get_object()
+        request_serializer = UpdateCategoryParameterSettingsSerializer(
+            data=request.data, many=True
+        )
+        request_serializer.is_valid(raise_exception=True)
+
+        for parameter_settings in request_serializer.validated_data:
+            settings = parameter_settings['settings']
+            parameter = parameter_settings['parameter']
+
+            # Update settings
+            category.categoryparameterssettings_set.filter(
+                category=category, parameter=parameter
+            ).update(**settings)
+
+        parameters_settings = category.categoryparameterssettings_set.all()
+        response_serializer = CategoryParameterSettingsSerializer(
+            parameters_settings, many=True, context=self.get_serializer_context()
+        )
+
+        return Response(response_serializer.data, status=status.HTTP_200_OK)
