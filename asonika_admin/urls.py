@@ -3,6 +3,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import SimpleRouter
 
 from categories.views import CategoryViewSet
+from components.views import ComponentViewSet
 from manufacturers.views import ManufacturerViewSet
 from measurements.views import MeasurementGroupViewSet, MeasurementUnitViewSet
 from parameters.views import ParameterViewSet
@@ -32,6 +33,9 @@ parameters_router.register('parameter', ParameterViewSet, basename='parameter')
 categories_router = SimpleRouter()
 categories_router.register('category', CategoryViewSet, basename='category')
 
+component_router = SimpleRouter()
+component_router.register('component', ComponentViewSet, basename='component')
+
 api_urls = [
     path('measurement/', include(measurements_router.urls)),
     path('login/', UserLoginView.as_view(), name='user_login'),
@@ -39,6 +43,7 @@ api_urls = [
     path('', include(specifications_router.urls)),
     path('', include(parameters_router.urls)),
     path('', include(categories_router.urls)),
+    path('', include(component_router.urls)),
 ]
 
 urlpatterns = [
