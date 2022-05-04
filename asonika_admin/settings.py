@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'categories.apps.CategoriesConfig',
     'parameters.apps.ParametersConfig',
+    'components.apps.ComponentsConfig',
     'rest_framework',
     'drf_spectacular',
 ]

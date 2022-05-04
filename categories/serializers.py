@@ -8,7 +8,7 @@ from parameters.serializers import ParameterSerializer
 from .models import Category
 
 
-class RelatedCategorySerializer(serializers.ModelSerializer):
+class SimpleCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['uuid', 'name', 'description']
@@ -16,8 +16,8 @@ class RelatedCategorySerializer(serializers.ModelSerializer):
 
 class CategorySerializer(serializers.ModelSerializer):
     parameters = ParameterSerializer(many=True)
-    children = RelatedCategorySerializer(many=True)
-    parent = RelatedCategorySerializer()
+    children = SimpleCategorySerializer(many=True)
+    parent = SimpleCategorySerializer()
 
     class Meta:
         model = Category
@@ -26,7 +26,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CreateCategorySerializer(serializers.ModelSerializer):
     parameters = serializers.SlugRelatedField(
-        slug_field='uuid', queryset=Parameter.objects.all(), many=True
+        slug_field='uuid', queryset=Parameter.objects.all(), many=True, required=False
     )
     parent = serializers.SlugRelatedField(
         slug_field='uuid', queryset=Category.objects.all()
