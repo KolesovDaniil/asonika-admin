@@ -193,8 +193,8 @@ def _update_component(component: Component, validated_data: dict) -> Component:
             parameter = parameter_data['parameter']
             value = parameter_data['value']
             try:
-                component.numericparameter_set.filter(parameter=parameter).update(
-                    value=value
+                component.numericparameter_set.update_or_create(
+                    parameter=parameter, defaults={'value': value}
                 )
             except Parameter.DoesNotExist:
                 raise NotFound(
@@ -207,8 +207,8 @@ def _update_component(component: Component, validated_data: dict) -> Component:
             parameter = parameter_data['parameter']
             value = parameter_data['value']
             try:
-                component.listparameter_set.filter(parameter=parameter).update(
-                    value=value
+                component.listparameter_set.update_or_create(
+                    parameter=parameter, defaults={'value': value}
                 )
             except Parameter.DoesNotExist:
                 raise NotFound(

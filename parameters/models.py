@@ -20,7 +20,7 @@ class Parameter(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(null=True)
     measurement_group = models.ForeignKey(
-        MeasurementGroup, on_delete=models.CASCADE, related_name='parameters'
+        MeasurementGroup, on_delete=models.CASCADE, related_name='parameters', null=True
     )
 
     def __str__(self) -> str:

@@ -22,7 +22,7 @@ class UpdateParameterSerializer(serializers.ModelSerializer):
 
 class CreateParameterSerializer(serializers.ModelSerializer):
     measurement_group = serializers.SlugRelatedField(
-        slug_field='uuid', queryset=MeasurementGroup.objects.all()
+        slug_field='uuid', queryset=MeasurementGroup.objects.all(), required=False
     )
 
     class Meta:
