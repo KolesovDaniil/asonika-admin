@@ -8,7 +8,7 @@ from manufacturers.views import ManufacturerViewSet
 from measurements.views import MeasurementGroupViewSet, MeasurementUnitViewSet
 from parameters.views import ParameterViewSet
 from specifications.views import SpecificationViewSet
-from users.views import UserLoginView
+from users.views import UserLoginView, UserLogoutView
 
 measurements_router = SimpleRouter()
 measurements_router.register(
@@ -39,6 +39,7 @@ component_router.register('component', ComponentViewSet, basename='component')
 api_urls = [
     path('measurement/', include(measurements_router.urls)),
     path('login/', UserLoginView.as_view(), name='user_login'),
+    path('logout/', UserLogoutView.as_view(), name='user_logout'),
     path('', include(manufacturers_router.urls)),
     path('', include(specifications_router.urls)),
     path('', include(parameters_router.urls)),

@@ -1,6 +1,6 @@
 from typing import Any
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 from drf_spectacular.utils import extend_schema
 from rest_framework.exceptions import NotAuthenticated
@@ -37,3 +37,12 @@ class UserLoginView(APIView):
             return Response()
 
         raise NotAuthenticated('Authentication credentials are invalid')
+
+
+@extend_schema(
+    tags=['User'], responses={'200': EmptyResponse, '4XX': ResponseWithStatusAndError}
+)
+class UserLogoutView(APIView):
+    def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        logout(request)
+        return Response()
