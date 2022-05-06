@@ -2,6 +2,7 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from funcy import last
 from rest_framework import serializers
 
 from asonika_admin.utils import ValidatedFileField, join_url_parts
@@ -42,7 +43,8 @@ class UpdateSpecificationSerializer(serializers.ModelSerializer):
 
 
 def _upload_file(file: InMemoryUploadedFile) -> str:
-    spec_filename = str(uuid4())
+    file_extension = last(str(file.name).split('.')) or ''
+    spec_filename = f'{uuid4()}.{file_extension}'
     spec_filepath = join_url_parts(
         settings.SPECIFICATIONS_PATH, spec_filename, trailing_slash=False
     )
