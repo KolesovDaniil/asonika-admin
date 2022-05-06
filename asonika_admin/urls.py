@@ -1,4 +1,5 @@
 from django.urls import include, path
+from django.views.decorators.csrf import ensure_csrf_cookie
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.routers import SimpleRouter
 
@@ -38,7 +39,7 @@ component_router.register('component', ComponentViewSet, basename='component')
 
 api_urls = [
     path('measurement/', include(measurements_router.urls)),
-    path('login/', UserLoginView.as_view(), name='user_login'),
+    path('login/', ensure_csrf_cookie(UserLoginView.as_view()), name='user_login'),
     path('logout/', UserLogoutView.as_view(), name='user_logout'),
     path('', include(manufacturers_router.urls)),
     path('', include(specifications_router.urls)),
