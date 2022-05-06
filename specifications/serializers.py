@@ -42,7 +42,7 @@ class UpdateSpecificationSerializer(serializers.ModelSerializer):
 
 
 def _upload_file(file: InMemoryUploadedFile) -> str:
-    spec_filename = f'{uuid4()}-{file.name}'
+    spec_filename = str(uuid4())
     spec_filepath = join_url_parts(
         settings.SPECIFICATIONS_PATH, spec_filename, trailing_slash=False
     )
