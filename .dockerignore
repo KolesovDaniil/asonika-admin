@@ -11,3 +11,4 @@ allure-results
 .ipython
 .bash_history
 .pycharm_helpers
+build/

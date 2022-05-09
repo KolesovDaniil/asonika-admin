@@ -18,6 +18,8 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', bool, default=False)
 CSRF_COOKIE_SECURE = not DEBUG
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS', list, default=[])
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=[])
 
@@ -42,11 +44,13 @@ INSTALLED_APPS = [
     'components.apps.ComponentsConfig',
     'rest_framework',
     'drf_spectacular',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
